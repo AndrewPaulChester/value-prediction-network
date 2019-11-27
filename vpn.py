@@ -126,9 +126,9 @@ class VPN(Q):
         self.step = tf.placeholder(tf.float32, [None], name="step") # num of steps
         self.terminal = tf.placeholder(tf.float32, (), name="terminal")
         
-        time = tf.shape(pi.x)[0]
-        steps = tf.minimum(self.args.prediction_step, time)
-        self.rollout_num = tf.to_float(time * steps - steps * (steps - 1) / 2)
+        time = tf.to_float(tf.shape(pi.x)[0])
+        steps = tf.minimum(tf.to_float(self.args.prediction_step), time)
+        self.rollout_num = tf.to_float(time * steps - steps * (steps - 1.0) / 2.0)
         
         # reward/gamma/value prediction
         self.r_delta = util.lower_triangular(
