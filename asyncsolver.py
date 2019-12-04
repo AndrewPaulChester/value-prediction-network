@@ -285,10 +285,10 @@ self explanatory:  take a rollout from the queue of the thread runner.
 
     def process(self, sess):
         """
-process grabs a rollout that's been produced by the thread runner,
-and updates the parameters.  The update is then sent to the parameter
-server.
-"""
+        process grabs a rollout that's been produced by the thread runner,
+        and updates the parameters.  The update is then sent to the parameter
+        server.
+        """
         sess.run(self.sync)  # copy weights from shared to local
         rollout = self.pull_batch_from_queue()
         should_compute_summary = self.task == 0 and self.local_steps % 101 == 0

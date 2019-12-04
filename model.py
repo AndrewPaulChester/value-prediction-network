@@ -430,7 +430,10 @@ class Model(object):
         if self.type == 'policy':
             return sess.run([self.sample, self.vf] + self.state_out, feed_dict)
         elif self.type == 'q':
-            return sess.run([self.sample] + self.state_out, feed_dict)
+            out = sess.run([self.sample] + self.state_out, feed_dict)
+            #print("Q {}".format(self.q))
+            #print("action {}".format(out[0]))
+            return out
         elif self.type == 'vpn':
             out = sess.run([self.q_plan] + self.state_out, feed_dict)
             q = out[0]

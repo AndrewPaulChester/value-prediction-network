@@ -14,10 +14,13 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 universe.configure_logging()
 import maze
+import taxi_env
 
 def create_env(env_id, client_id, remotes, **kwargs):
     if env_id == 'maze':
         return maze.MazeSMDP(**kwargs)
+    if env_id == 'taxi':
+        return taxi_env.TaxiEnv(**kwargs)
     
     spec = gym.spec(env_id)
 

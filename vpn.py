@@ -98,7 +98,15 @@ class VPN(Q):
         batch_r = util.discount(rewards_plus_v, gamma, time)
         features = rollout.features[0]
 
-        return util.Batch(si=batch_si, 
+
+        # print(np.argmax(batch_a,1))
+        # print(batch_r)
+        # # print(features)
+        # # print(rollout.terminal)
+        # print(rewards)
+        # print(time)
+        # print(meta)
+        a = util.Batch(si=batch_si, 
               a=batch_a, 
               adv=None,
               r=batch_r, 
@@ -108,6 +116,9 @@ class VPN(Q):
               step=time,
               meta=meta,
               )
+        # print("batch")
+        # print(a)
+        return a
 
     def define_loss(self):
         pi = self.local_network
@@ -195,6 +206,8 @@ class VPN(Q):
         if self.args.meta_dim > 0:
             feed_dict[self.local_network.meta_off] = traj.meta
 
+        # print("feed_dict")
+        # print(feed_dict)
         return feed_dict
 
     def random_trajectory(self):
