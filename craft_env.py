@@ -4,30 +4,21 @@ import numpy as np
 import tensorflow as tf
 import logging
 import universe
-from bs4 import BeautifulSoup
 
-from gym_taxi.envs.taxi_env import JsonTaxiEnv
+from gym_craft.envs.craft_env import JsonCraftEnv
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 universe.configure_logging()
 
 
-class TaxiEnv(object):
+class CraftEnv(object):
     VALIDATION_MODE = 0
 
     def __init__(self, config="", verbose=1):
-        self.config = BeautifulSoup(config,"lxml")
-        if self.config.taxi["size"]=="small":
-            self.env = JsonTaxiEnv("screen","predictable5",rewards={"base": 0, "failed-action": 0, "drop-off": 1})
-        elif self.config.taxi["size"]=="medium":
-            self.env = JsonTaxiEnv("screen","predictable10",rewards={"base": 0, "failed-action": 0, "drop-off": 1})
-        elif self.config.taxi["size"]=="large":
-            self.env = JsonTaxiEnv("screen","predictable",rewards={"base": 0, "failed-action": 0, "drop-off": 1})
-        else:
-            raise ValueError("expected size in config, allowable values: small, medium, large")
+        self.env = JsonCraftEnv("screen","rooms","full",rewards={"base": 0, "failed-action": 0, "drop-off": 1})
         self.terminated = False
-        self.env.seed(int(self.config.taxi["seed"]))
+        self.env.seed(0)
 
         self.max_history = 1000
         self.reward_history = []
